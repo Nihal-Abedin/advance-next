@@ -8,12 +8,14 @@ interface login {
     token: string;
     userType: string;
     username: string;
+    data: object | null;
 }
 const initialState: login = {
     isloggedin: false,
     token: "",
     userType: "",
-    username: ""
+    username: "",
+    data: null,
 }
 interface Payload {
     payload: {
@@ -31,13 +33,17 @@ const Login_Slice = createSlice({
     reducers: {
         login(state: login) {
             state.isloggedin = true;
-
         },
         setToken(state: login, actions: Payload) {
             state.token = `${actions.payload.type} ${actions.payload.token}`;
             state.userType = actions.payload.userType;
             state.username = actions.payload.username;
             localStorage.setItem("TOKEN", state.token);
+        },
+        setUser(state: login, actions: Payload) {
+            // state.userType = actions.payload.userType;
+            state.username = actions.payload?.username;
+            state.data = actions.payload
         }
     }
 });
