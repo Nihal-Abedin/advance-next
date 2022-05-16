@@ -49,7 +49,6 @@ const Profile :NextPage = () => {
         sendReq()
        
       }, [])
-      const src = ``
     const handelDetailFrom = () => {
 
     }
@@ -61,8 +60,8 @@ const Profile :NextPage = () => {
                     <p >Back</p>
                     <div className={styles.profileContent}>
                         <div className={styles.profileImageContainer}>
-                        {/* <img src={LogCtx?.userDetails?.profilePicture?.length > 0?`https://exam.greeho.com/api/files/${LogCtx.userDetails.profilePicture}`:DefaultImg} className={styles.profileImage} alt="profile" /> */}
-                            <Image className={styles.profileImage} alt="profile" src={info ? `https://exam.greeho.com/api/files/${info?.profilePicture}` :""}  width={200} height={200}/>
+                        <img src={info ? `https://exam.greeho.com/api/files/${info?.profilePicture}` :""} className={styles.profileImage} alt="profile" />
+                            {/* <Image className={styles.profileImage} alt="profile" src={info ? `https://exam.greeho.com/api/files/${info?.profilePicture}` :""}  width={200} height={200}/> */}
                             <input type="file"  className={styles.fileInput} />
                         </div>
                     </div>
