@@ -11,6 +11,7 @@ import { loginActions } from "../../store/login-slice";
 import styles from "./userProfile.module.css";
 import { RootState } from "../../store/store";
 import Image from "next/image";
+import FILE_UPLOAD from "../../helpers/util/fileUpload-api-util";
 interface data {
     email?:string;
     mobile?:string;
@@ -21,7 +22,8 @@ interface data {
     profilePicture?:string
 }
 const Profile :NextPage = () => {
-    const [info, setInfo] = useState<data>({})
+    const [info, setInfo] = useState<data>({});
+    const [image, setImage] = useState<any>();
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -32,7 +34,6 @@ const Profile :NextPage = () => {
 
     useEffect(()=> {
         const sendReq = async () => {
-          if(localStorage.getItem("TOKEN")) {
             dispatch(loginActions.login());
             const data = await GET_SELF();
     
@@ -44,11 +45,27 @@ const Profile :NextPage = () => {
             }
             setInfo(data.data.account);
            
-          }
+          
         }
-        sendReq()
+
+        if(localStorage.getItem("TOKEN")) {
+
+            sendReq();
+        }
        
-      }, [])
+      }, []);
+
+    const handelProfileImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log( e.target.files, "IMAGE");
+        const files = e.target.files;
+        const formData = new FormData();
+        formData.append('file', files![0]);
+        const res = await FILE_UPLOAD(formData);
+        console.log(res)
+        setInfo({...info, profilePicture:res.data.fileName})
+        // console.log(Object.fromEntries(formData))
+    }
+
     const handelDetailFrom = () => {
 
     }
@@ -62,7 +79,7 @@ const Profile :NextPage = () => {
                         <div className={styles.profileImageContainer}>
                         <img src={info ? `https://exam.greeho.com/api/files/${info?.profilePicture}` :""} className={styles.profileImage} alt="profile" />
                             {/* <Image className={styles.profileImage} alt="profile" src={info ? `https://exam.greeho.com/api/files/${info?.profilePicture}` :""}  width={200} height={200}/> */}
-                            <input type="file"  className={styles.fileInput} />
+                            <input type="file" onChange={handelProfileImage}  className={styles.fileInput} />
                         </div>
                     </div>
                     <form onSubmit={handelDetailFrom} className={styles.profileForm}>

@@ -17,6 +17,10 @@ const Paths = () => {
         name: "Home",
         path: "/",
         show: true
+    }, {
+        name: "All Users",
+        path: "/all-users",
+        show: log.userType === "ADMIN" || log.data?.userType === "ADMIN"
     }]
 };
 

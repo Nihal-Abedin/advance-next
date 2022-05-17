@@ -8,7 +8,7 @@ interface login {
     token: string;
     userType: string;
     username: string;
-    data: object | null;
+    data: { userType: string } | null;
 }
 const initialState: login = {
     isloggedin: false,
