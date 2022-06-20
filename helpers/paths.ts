@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-
+import React from "react";
 const Paths = () => {
 
     const log = useSelector((state: RootState) => state.login);
@@ -23,5 +23,6 @@ const Paths = () => {
         show: log.userType === "ADMIN" || log.data?.userType === "ADMIN"
     }]
 };
+
 
 export default Paths;

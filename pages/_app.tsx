@@ -9,18 +9,22 @@ import {
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { useEffect } from 'react';
 import { loginActions } from '../store/login-slice';
+import { CookiesProvider } from 'react-cookie';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
   // const user = useSelector((state: RootState) => state.login);
 
-  
+
   return (
     <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
+      <CookiesProvider>
+
+        <QueryClientProvider client={queryClient}>
           <Component {...pageProps} />
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right"/>
-      </QueryClientProvider>
+          <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        </QueryClientProvider>
+      </CookiesProvider>
     </Provider>
   )
 }
